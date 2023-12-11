@@ -40,6 +40,7 @@ public class Player : Ship
             TakeDamage(10); // HOIST MAGIC NUMBER TO GAMECONSTANTS!!!
         }
     }
+
     void MoveUpOrDown(bool moveUp)
     {
         transform.Translate(Time.deltaTime * verticalSpeed * (moveUp ? Vector3.up : Vector3.down), Space.World);

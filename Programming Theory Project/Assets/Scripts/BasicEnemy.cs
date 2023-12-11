@@ -8,7 +8,7 @@ public class BasicEnemy : Ship
     // Start is called before the first frame update
     void Start()
     {
-        SetHP(1); //   GET RID OF MAGIC NUMBER!!!
+        SetHP(GameConstants.InitialBasicEnemyHP); 
     }
 
     // Update is called once per frame
@@ -17,15 +17,15 @@ public class BasicEnemy : Ship
         Move();
     }
 
-    private void OnTriggerEnter(UnityEngine.Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(5);  // HOIST MAGIC NUMBER TO GAMECONSTANTS!!!
+            TakeDamage(GameConstants.BulletDamage);  
         }
         else if (other.gameObject.CompareTag("Player"))
         {
-            TakeDamage(10); // HOIST MAGIC NUMBER TO GAMECONSTANTS!!!
+            TakeDamage(GameConstants.ShipCollisionDamage); 
         }
     }
 
