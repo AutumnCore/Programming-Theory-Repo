@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,16 +34,31 @@ public class Player : Ship
     {
         if(other.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(5);  // HOIST MAGIC NUMBER TO GAMECONSTANTS!!!
+            TakeDamage(GameConstants.BulletDamage);  
         }
         else if(other.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(10); // HOIST MAGIC NUMBER TO GAMECONSTANTS!!!
+            TakeDamage(GameConstants.ShipCollisionDamage); 
         }
     }
 
     void MoveUpOrDown(bool moveUp)
     {
         transform.Translate(Time.deltaTime * verticalSpeed * (moveUp ? Vector3.up : Vector3.down), Space.World);
+        StayInsideScreen();
+    }
+
+    private void StayInsideScreen()
+    {
+        Vector3 position = transform.position;
+        if (position.y + GameConstants.ColliderPlayer > ScreenUtilities.ScreenTop)
+        {
+            position.y = ScreenUtilities.ScreenTop - GameConstants.ColliderPlayer;
+        }
+        else if (position.y - GameConstants.ColliderPlayer < ScreenUtilities.ScreenBottom)
+        {
+            position.y = ScreenUtilities.ScreenBottom + GameConstants.ColliderPlayer;
+        }
+        transform.position = position;
     }
 }

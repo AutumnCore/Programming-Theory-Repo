@@ -4,7 +4,11 @@ using UnityEngine;
 
 public static class GameConstants
 {
-    public const int InitialBasicEnemyHP = 1;
+    // experimantally determined values for keeping the player inside screen, have to be redetermined if size of the player changes
+    public const float ColliderPlayer = 1.2f;
+
+    public const int InitialPlayerHP = 100;
+    public const int BasicEnemyHP = 1;
 
     public const int BulletDamage = 5;
     public const int ShipCollisionDamage = 10;

@@ -8,7 +8,7 @@ public class BasicEnemy : Ship
     // Start is called before the first frame update
     void Start()
     {
-        SetHP(GameConstants.InitialBasicEnemyHP); 
+        SetHP(GameConstants.BasicEnemyHP); 
     }
 
     // Update is called once per frame
@@ -29,6 +29,11 @@ public class BasicEnemy : Ship
         }
     }
 
+    private void OnBecameInvisible()
+    {
+        Deactivate();
+    }
+
     protected virtual void Move()
     {
         transform.Translate(_speed * Time.deltaTime * Vector3.up);
@@ -41,6 +46,6 @@ public class BasicEnemy : Ship
 
     public void Deactivate()
     {
-
+        Debug.Log(gameObject.name + " deactivated");
     }
 }
