@@ -112,7 +112,7 @@ public class ObjectPool : MonoBehaviour
     public static void ReturnPooledObject(PooledObjectName name, GameObject obj)
     {
         obj.SetActive(false);
-        switch (name)
+        /*switch (name)
         {
             case PooledObjectName.Bullet:
                 obj.GetComponent<Bullet>().StopMoving();
@@ -126,7 +126,7 @@ public class ObjectPool : MonoBehaviour
             case PooledObjectName.DoubleShotEnemy:
                 obj.GetComponent<BasicEnemy>().Deactivate();
                 break;
-        }
+        }*/
             
         pools[name].Add(obj);
     }

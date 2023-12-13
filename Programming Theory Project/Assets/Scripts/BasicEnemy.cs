@@ -31,7 +31,7 @@ public class BasicEnemy : Ship
 
     private void OnBecameInvisible()
     {
-        Deactivate();
+        Die();
     }
 
     protected virtual void Move()
@@ -39,13 +39,13 @@ public class BasicEnemy : Ship
         transform.Translate(_speed * Time.deltaTime * Vector3.up);
     }
 
+    protected override void Die()
+    {
+        ObjectPool.ReturnEnemy(gameObject, PooledObjectName.BasicEnemy);
+    }
+
     public void Initialize()
     {
 
-    }
-
-    public void Deactivate()
-    {
-        Debug.Log(gameObject.name + " deactivated");
     }
 }

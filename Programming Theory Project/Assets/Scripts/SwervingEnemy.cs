@@ -15,4 +15,26 @@ public class SwervingEnemy : BasicEnemy
     {
         Move();
     }
+
+    protected override void Die()
+    {
+        ObjectPool.ReturnEnemy(gameObject, PooledObjectName.SwervingEnemy);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            TakeDamage(GameConstants.BulletDamage);
+        }
+        else if (other.gameObject.CompareTag("Player"))
+        {
+            TakeDamage(GameConstants.ShipCollisionDamage);
+        }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Die();
+    }
 }

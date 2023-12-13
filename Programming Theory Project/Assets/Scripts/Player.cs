@@ -47,6 +47,21 @@ public class Player : Ship
         transform.Translate(Time.deltaTime * verticalSpeed * (moveUp ? Vector3.up : Vector3.down), Space.World);
         StayInsideScreen();
     }
+    // POLYMORPHISM
+    protected override void Shoot()
+    {
+        base.Shoot();
+        Bullet.StartMoving(Vector3.right);
+
+    }
+    // POLYMORPHISM
+    protected override Vector3 CalculateBulletPos()
+    {
+        Vector3 bulletPos = transform.position;
+        bulletPos.x += GameConstants.XShipBulletOffset;
+        bulletPos.y += GameConstants.YShipBulletOffset;
+        return bulletPos;
+    }
 
     private void StayInsideScreen()
     {

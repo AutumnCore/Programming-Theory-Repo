@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,13 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     private int _hp;
+    private Bullet _bullet;
+
+    protected Bullet Bullet { get { return _bullet; } private set { _bullet = value; Debug.Log("Set a new bullet"); } }
     protected virtual int HP { get { return _hp; } private set { _hp = value; } }
+
     protected virtual void SetHP(int hp) => HP = hp;
+
     protected void TakeDamage(int damage)
     {
         HP -= damage;
@@ -14,11 +20,25 @@ public class Ship : MonoBehaviour
     }
     protected virtual void CheckForDeath()
     {
-        if (_hp <= 0) { Debug.Log(gameObject.name + " just died"); }
+        if (_hp <= 0) { Die(); }
     }
-    protected void Shoot()
+
+    protected virtual void Die()
     {
-        // Not implemented yet
-        Debug.Log(gameObject.name + " has fired a shot");
+        Debug.Log(gameObject.name + " just died");
+    }
+
+    protected virtual void Shoot()
+    {
+        GameObject bullet = ObjectPool.GetBullet();
+        bullet.transform.position = CalculateBulletPos();
+        bullet.SetActive(true);
+        Bullet = bullet.GetComponent<Bullet>();
+    }
+
+    protected virtual Vector3 CalculateBulletPos()
+    {
+        Vector3 bulletPos = transform.position;
+        return bulletPos;
     }
 }
