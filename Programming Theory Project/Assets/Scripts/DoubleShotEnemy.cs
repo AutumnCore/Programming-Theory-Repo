@@ -4,22 +4,12 @@ using UnityEngine;
 
 public class DoubleShotEnemy : BasicEnemy
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        Move();
+        transform.Translate(CalculateNextPosition());
     }
 
-    protected override void Die()
-    {
-        ObjectPool.ReturnEnemy(gameObject, PooledObjectName.DoubleShotEnemy);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -31,10 +21,11 @@ public class DoubleShotEnemy : BasicEnemy
         {
             TakeDamage(GameConstants.ShipCollisionDamage);
         }
+        else if (other.gameObject.CompareTag("Border"))
+        {
+            Die();
+        }
     }
+ 
 
-    private void OnBecameInvisible()
-    {
-        Die();
-    }
 }

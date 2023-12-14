@@ -76,4 +76,9 @@ public class Player : Ship
         }
         transform.position = position;
     }
+
+    protected override void Die()
+    {
+        Debug.Log(gameObject.name + " just died");
+    }
 }

@@ -144,15 +144,15 @@ public class ObjectPool : MonoBehaviour
                 break; 
             case PooledObjectName.BasicEnemy:
                 obj = GameObject.Instantiate(prefabBasicEnemy);
-                obj.GetComponent<BasicEnemy>().Initialize();
+                obj.GetComponent<BasicEnemy>().Initialize(PooledObjectName.BasicEnemy);
                 break;
             case PooledObjectName.SwervingEnemy:
                 obj = GameObject.Instantiate(prefabSwervingEnemy);
-                obj.GetComponent<SwervingEnemy>().Initialize();
+                obj.GetComponent<SwervingEnemy>().Initialize(PooledObjectName.SwervingEnemy);
                 break;
             case PooledObjectName.DoubleShotEnemy:
                 obj = GameObject.Instantiate(prefabDoubleShotEnemy);
-                obj.GetComponent<DoubleShotEnemy>().Initialize();
+                obj.GetComponent<DoubleShotEnemy>().Initialize(PooledObjectName.DoubleShotEnemy);
                 break;
             default:obj=null; break;
         }

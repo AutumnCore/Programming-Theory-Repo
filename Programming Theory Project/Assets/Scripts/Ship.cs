@@ -7,9 +7,11 @@ public class Ship : MonoBehaviour
 {
     private int _hp;
     private Bullet _bullet;
+    private PooledObjectName _objectName;
 
-    protected Bullet Bullet { get { return _bullet; } private set { _bullet = value; Debug.Log("Set a new bullet"); } }
+    protected Bullet Bullet { get { return _bullet; } private set { _bullet = value; /*Debug.Log("Set a new bullet");*/ } }
     protected virtual int HP { get { return _hp; } private set { _hp = value; } }
+    protected virtual PooledObjectName ObjectName { get { return _objectName; } set { _objectName = value; } }
 
     protected virtual void SetHP(int hp) => HP = hp;
 
@@ -25,7 +27,7 @@ public class Ship : MonoBehaviour
 
     protected virtual void Die()
     {
-        Debug.Log(gameObject.name + " just died");
+        ObjectPool.ReturnEnemy(gameObject, ObjectName);
     }
 
     protected virtual void Shoot()

@@ -4,21 +4,11 @@ using UnityEngine;
 
 public class SwervingEnemy : BasicEnemy
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
-        Move();
-    }
-
-    protected override void Die()
-    {
-        ObjectPool.ReturnEnemy(gameObject, PooledObjectName.SwervingEnemy);
+        transform.Translate(CalculateNextPosition());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,10 +21,17 @@ public class SwervingEnemy : BasicEnemy
         {
             TakeDamage(GameConstants.ShipCollisionDamage);
         }
+        else if (other.gameObject.CompareTag("Border"))
+        {
+            Die();
+        }
     }
 
-    private void OnBecameInvisible()
+    protected override Vector3 CalculateNextPosition()
     {
-        Die();
+        Vector3 next = base.CalculateNextPosition();
+        float x = Mathf.Sin(transform.position.x);
+        next.x = x;
+        return next;
     }
 }
