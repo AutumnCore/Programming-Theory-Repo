@@ -26,10 +26,4 @@ public class Bullet : MonoBehaviour
         StopMoving();
         ObjectPool.ReturnBullet(gameObject);
     }
-
-
-    private void Update()
-    {
-        //Debug.Log(gameObject.name + " moving at speed " +  rb.velocity);
-    }
 }

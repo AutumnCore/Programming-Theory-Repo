@@ -9,27 +9,32 @@ public class Ship : MonoBehaviour
     private Bullet _bullet;
     private PooledObjectName _objectName;
 
-    protected Bullet Bullet { get { return _bullet; } private set { _bullet = value; /*Debug.Log("Set a new bullet");*/ } }
+    // ENCAPSULATION
+    protected Bullet Bullet { get { return _bullet; } private set { _bullet = value; } }
     protected virtual int HP { get { return _hp; } private set { _hp = value; } }
     protected virtual PooledObjectName ObjectName { get { return _objectName; } set { _objectName = value; } }
 
     protected virtual void SetHP(int hp) => HP = hp;
 
+    // ABSTRACTION
     protected void TakeDamage(int damage)
     {
         HP -= damage;
         CheckForDeath();
     }
+    // ABSTRACTION
     protected virtual void CheckForDeath()
     {
         if (_hp <= 0) { Die(); }
     }
 
+    // ABSTRACTION
     protected virtual void Die()
     {
         ObjectPool.ReturnEnemy(gameObject, ObjectName);
     }
 
+    // ABSTRACTION
     protected virtual void Shoot()
     {
         GameObject bullet = ObjectPool.GetBullet();
@@ -38,6 +43,7 @@ public class Ship : MonoBehaviour
         Bullet = bullet.GetComponent<Bullet>();
     }
 
+    // ABSTRACTION
     protected virtual Vector3 CalculateBulletPos()
     {
         Vector3 bulletPos = transform.position;

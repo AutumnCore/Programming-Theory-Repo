@@ -41,7 +41,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public void AddEventListener(Action handler)
+    public void AddTimerFinishedEventListener(Action handler)
     {
         TimerRunOut += handler;
     }

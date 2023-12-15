@@ -3,15 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class Player : Ship
 {
     [SerializeField]
-    float verticalSpeed;
+    float _normalVerticalSpeed;
+    [SerializeField]
+    float _increasedVerticalSpeed;
+    bool _fastSpeedEnabled = false;
+
+    Timer _timer;
+    [SerializeField]
+    float _shootDelay;
+
+    public event Action<int> PlayerHPChanged;
+    public event Action PlayerDied;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetHP(100);
+        SetHP(GameConstants.InitialPlayerHP);
+        EventsMediator.AddHealthChangedInvoker(this);
+        EventsMediator.AddPlayerDiedInvoker(this);
+        _timer = gameObject.AddComponent<Timer>();
+        _timer.StartTimer(_shootDelay);
+        _timer.AddTimerFinishedEventListener(TimerFinishedEventHandler);
     }
 
     // Update is called once per frame
@@ -25,26 +41,37 @@ public class Player : Ship
         {
             MoveUpOrDown(false);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            _fastSpeedEnabled = true;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+        {
+            _fastSpeedEnabled = false;
+        }
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
-        }
+        }*/
     }
     private void OnTriggerEnter(UnityEngine.Collider other)
     {
         if(other.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(GameConstants.BulletDamage);  
+            TakeDamage(GameConstants.BulletDamage);
+            PlayerHPChanged?.Invoke(HP);
         }
         else if(other.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(GameConstants.ShipCollisionDamage); 
+            TakeDamage(GameConstants.ShipCollisionDamage);
+            PlayerHPChanged?.Invoke(HP);
         }
     }
 
+    // ABSTRACTION
     void MoveUpOrDown(bool moveUp)
     {
-        transform.Translate(Time.deltaTime * verticalSpeed * (moveUp ? Vector3.up : Vector3.down), Space.World);
+        transform.Translate(Time.deltaTime * (_fastSpeedEnabled ? _increasedVerticalSpeed : _normalVerticalSpeed) * (moveUp ? Vector3.up : Vector3.down), Space.World);
         StayInsideScreen();
     }
     // POLYMORPHISM
@@ -63,6 +90,7 @@ public class Player : Ship
         return bulletPos;
     }
 
+    // ABSTRACTION
     private void StayInsideScreen()
     {
         Vector3 position = transform.position;
@@ -76,9 +104,27 @@ public class Player : Ship
         }
         transform.position = position;
     }
-
+    // POLYMORPHISM
     protected override void Die()
     {
         Debug.Log(gameObject.name + " just died");
+        PlayerDied?.Invoke();
+        this.enabled = false;
+    }
+
+    public void AddPlayerHPChangedListener(Action<int> listener)
+    {
+        PlayerHPChanged += listener;
+    }
+
+    public void AddPlayerDiedListener(Action listener)
+    {
+        PlayerDied += listener;
+    }
+
+    void TimerFinishedEventHandler()
+    {
+        Shoot();
+        _timer.StartTimer(_shootDelay);
     }
 }

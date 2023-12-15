@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9024352518028325955}
   - component: {fileID: 1462838951899601981}
   - component: {fileID: 2392723231760910739}
-  - component: {fileID: 6790336099854451770}
   - component: {fileID: 5868783953594099923}
+  - component: {fileID: 6790336099854451770}
   m_Layer: 0
   m_Name: SwervingEnemy
   m_TagString: Enemy
@@ -109,18 +109,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6790336099854451770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5747136269403397213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06fc875e87d50234ca2fca906a831e56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &5868783953594099923
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -148,3 +136,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6790336099854451770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747136269403397213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fc875e87d50234ca2fca906a831e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shootTime: 2
+  amplitudeModifier: 100

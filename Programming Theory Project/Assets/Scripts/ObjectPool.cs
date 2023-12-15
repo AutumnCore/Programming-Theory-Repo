@@ -112,22 +112,6 @@ public class ObjectPool : MonoBehaviour
     public static void ReturnPooledObject(PooledObjectName name, GameObject obj)
     {
         obj.SetActive(false);
-        /*switch (name)
-        {
-            case PooledObjectName.Bullet:
-                obj.GetComponent<Bullet>().StopMoving();
-                break;
-            case PooledObjectName.BasicEnemy:
-                obj.GetComponent<BasicEnemy>().Deactivate();
-                break;
-            case PooledObjectName.SwervingEnemy:
-                obj.GetComponent<BasicEnemy>().Deactivate();  // I wonder if it will work, if yes then we can change switch statement to if-else
-                break;
-            case PooledObjectName.DoubleShotEnemy:
-                obj.GetComponent<BasicEnemy>().Deactivate();
-                break;
-        }*/
-            
         pools[name].Add(obj);
     }
 

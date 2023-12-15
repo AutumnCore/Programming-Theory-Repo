@@ -2,19 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class BasicEnemy : Ship
 {
     float _speed = 2;
     [SerializeField]
-    float _shootTime = 1.0f;
+    float _shootTime = 1.5f;
     Timer _timer;
+    // ENCAPSULATION
+    protected virtual float ShootTime { get => _shootTime; set => _shootTime = value; } // not auto implemented because wanted to change this value in inspector
+    protected virtual Vector3 DirectionToShoot { get; set; }
 
-    public void Initialize(PooledObjectName name)
+    public virtual void Initialize(PooledObjectName name)
     {
         SetHP(GameConstants.BasicEnemyHP);
         ObjectName = name;
+        DirectionToShoot = Vector3.left; 
         _timer = gameObject.AddComponent<Timer>();
-        _timer.AddEventListener(TimerFinishedHandler);
+        _timer.AddTimerFinishedEventListener(TimerFinishedEventHandler);
+        EventsMediator.AddPlayerDiedListener(PlayerDiedEventHandler);
     }
 
     // Update is called once per frame
@@ -36,21 +42,27 @@ public class BasicEnemy : Ship
         return _speed * Time.deltaTime * Vector3.up;
     }
 
+    // POLYMORPHISM
     protected override Vector3 CalculateBulletPos()
     {
         Vector3 bulletPos = transform.position;
-        bulletPos.x += -0.5f; // GET RID OF MAGIC NUMBER
+        bulletPos.x -= GameConstants.XEnemyBulletOffset; 
         return bulletPos;
     }
 
-    private void TimerFinishedHandler()
+    protected virtual void TimerFinishedEventHandler()
     {
         if (_timer != null)
         {
             Shoot();
-            Bullet.StartMoving(Vector3.left);
+            Bullet.StartMoving(DirectionToShoot);
             _timer.StartTimer(_shootTime);
         }
+    }
+
+    public void PlayerDiedEventHandler()
+    {
+        Die();
     }
 
     private void OnTriggerEnter(Collider other)

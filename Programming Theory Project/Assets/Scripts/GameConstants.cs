@@ -14,6 +14,7 @@ public static class GameConstants
 
     public const float XShipBulletOffset = .6f;
     public const float YShipBulletOffset = 0.05f;
+    public const float XEnemyBulletOffset = 0.5f;
 
     public const float BulletSpeed = 500.0f;
 
@@ -21,7 +22,7 @@ public static class GameConstants
     public const int ShipCollisionDamage = 10;
 
     public const int InitialBulletPoolCapacity = 100;
-    public const int InitialEnemyPoolCapacity = 15;
+    public const int InitialEnemyPoolCapacity = 10;
 
     public const float SpawnDelay = 1.0f;
     public const float XSpawnPosition = 10.0f;

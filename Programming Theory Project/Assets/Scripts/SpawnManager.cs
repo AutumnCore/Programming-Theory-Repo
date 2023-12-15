@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
     {
         ObjectPool.Initialize();
         StartCoroutine(SpawnCoroutine());
+        EventsMediator.AddPlayerDiedListener(PlayerDiedEventHandler);
     }
 
     IEnumerator SpawnCoroutine()
@@ -32,5 +33,10 @@ public class SpawnManager : MonoBehaviour
     {
         int randomEnemy = UnityEngine.Random.Range(1,4);
         return (PooledObjectName)randomEnemy;
+    }
+
+    private void PlayerDiedEventHandler()
+    {
+        StopAllCoroutines();
     }
 }
