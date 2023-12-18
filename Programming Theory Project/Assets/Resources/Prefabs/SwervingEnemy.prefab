@@ -148,5 +148,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fc875e87d50234ca2fca906a831e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shootTime: 2
+  _shootTime: 1.5
   amplitudeModifier: 100

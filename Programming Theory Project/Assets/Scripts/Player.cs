@@ -109,6 +109,7 @@ public class Player : Ship
     {
         Debug.Log(gameObject.name + " just died");
         PlayerDied?.Invoke();
+        _timer.StopTimer();
         this.enabled = false;
     }
 
